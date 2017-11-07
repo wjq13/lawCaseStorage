@@ -1,0 +1,141 @@
+package entities;
+
+import java.io.Serializable;
+
+public class LawCase implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// 全文
+	private String fullText;
+	// 来源文件
+	private String sourceFileName;
+	// 案由
+	private String causeOfAction;
+	// 案由代码
+	private String codeOfCauseOfAction;
+	// 文首
+	private String beginning;
+	// 当事人
+	private String litigant;
+	// 诉讼记录全文
+	private String litigationRecord;
+	// 原告诉称
+	private String plaintiffAlleges;
+	// 被告辩称
+	private String defendantArgued;
+	// 查明事实
+	private String factFinded;
+	// 裁判分析过程
+	private String analysisProcess;
+	// 判决结果
+	private String decisionResult;
+	// 文尾
+	private String end;
+
+	public String getFullText() {
+		return fullText;
+	}
+
+	public void setFullText(String fullText) {
+		this.fullText = fullText;
+	}
+
+	public String getSourceFileName() {
+		return sourceFileName;
+	}
+
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
+	}
+
+	public String getCauseOfAction() {
+		return causeOfAction;
+	}
+
+	public void setCauseOfAction(String causeOfAction) {
+		this.causeOfAction = causeOfAction;
+	}
+
+	public String getCodeOfCauseOfAction() {
+		return codeOfCauseOfAction;
+	}
+
+	public void setCodeOfCauseOfAction(String codeOfCauseOfAction) {
+		this.codeOfCauseOfAction = codeOfCauseOfAction;
+	}
+
+	public String getBeginning() {
+		return beginning;
+	}
+
+	public void setBeginning(String beginning) {
+		this.beginning = beginning;
+	}
+
+	public String getLitigant() {
+		return litigant;
+	}
+
+	public void setLitigant(String litigant) {
+		this.litigant = litigant;
+	}
+
+	public String getLitigationRecord() {
+		return litigationRecord;
+	}
+
+	public void setLitigationRecord(String litigationRecord) {
+		this.litigationRecord = litigationRecord;
+	}
+
+	public String getPlaintiffAlleges() {
+		return plaintiffAlleges;
+	}
+
+	public void setPlaintiffAlleges(String plaintiffAlleges) {
+		this.plaintiffAlleges = plaintiffAlleges;
+	}
+
+	public String getDefendantArgued() {
+		return defendantArgued;
+	}
+
+	public void setDefendantArgued(String defendantArgued) {
+		this.defendantArgued = defendantArgued;
+	}
+
+	public String getAnalysisProcess() {
+		return analysisProcess;
+	}
+
+	public void setAnalysisProcess(String analysisProcess) {
+		this.analysisProcess = analysisProcess;
+	}
+
+	public String getDecisionResult() {
+		return decisionResult;
+	}
+
+	public void setDecisionResult(String decisionResult) {
+		this.decisionResult = decisionResult;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
+	public String getFactFinded() {
+		return factFinded;
+	}
+
+	public void setFactFinded(String factFinded) {
+		this.factFinded = factFinded;
+	}
+
+}
