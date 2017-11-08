@@ -15,14 +15,15 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
 public class MongodbImpl implements MongodbDao {
+	@Override
 	public Map<String, Integer> queryByID(MongoDatabase db, String table, Object Id) throws Exception {
 		MongoCollection<Document> collection = db.getCollection(table);
 		BasicDBObject query = new BasicDBObject("_id", Id);
-		// DBObject�ӿں�BasicDBObject���󣺱�ʾһ������ļ�¼��BasicDBObjectʵ����DBObject����key-value�����ݽṹ����������HashMap�ǻ���һ�µġ�
+		// DBObject接口和BasicDBObject对象：表示一个具体的记录，BasicDBObject实现了DBObject，是key-value的数据结构，用起来和HashMap是基本一致的。
 		FindIterable<Document> iterable = collection.find(query);
 
 		// for (Document dd : iterable) {
-		// int dudu = dd.getInteger("�Ϻ�"); // ��ȡ��Ӧ������
+		// int dudu = dd.getInteger("上海"); // 读取响应的数据
 		// System.out.println("dudududu:"+dudu);
 		// }
 
@@ -33,13 +34,13 @@ public class MongodbImpl implements MongodbDao {
 			String jsonString = user.toJson();
 			jsonStrToMap = JsonStrToMap.jsonStrToMap(jsonString);
 		}
-		System.out.println("����ID���");
+		System.out.println("检索ID完毕");
 
 		return jsonStrToMap;
 	}
 
 	/**
-	 * ����һ��doc������������doc�ǿյ�ʱ�����ȫ��
+	 * 根据一个doc，来检索，当doc是空的时候检索全部
 	 * 
 	 * @param db
 	 * @param table
@@ -49,8 +50,8 @@ public class MongodbImpl implements MongodbDao {
 		MongoCollection<Document> collection = db.getCollection(table);
 		FindIterable<Document> iterable = collection.find();
 		/**
-		 * 1. ��ȡ������FindIterable<Document> 2. ��ȡ�α�MongoCursor<Document> 3.
-		 * ͨ���α�������������ĵ�����
+		 * 1. 获取迭代器FindIterable<Document> 2. 获取游标MongoCursor<Document> 3.
+		 * 通过游标遍历检索出的文档集合
 		 */
 
 		List<Map<String, Integer>> list = new ArrayList<Map<String, Integer>>();
@@ -61,12 +62,12 @@ public class MongodbImpl implements MongodbDao {
 			Map<String, Integer> jsonStrToMap = JsonStrToMap.jsonStrToMap(jsonString);
 			list.add(jsonStrToMap);
 		}
-		System.out.println("����doc���");
+		System.out.println("检索doc完毕");
 		return list;
 	}
 
 	/**
-	 * ����ȫ�������ص�����
+	 * 检索全部并返回迭代器
 	 * 
 	 * @param db
 	 * @param table
@@ -83,12 +84,12 @@ public class MongodbImpl implements MongodbDao {
 			Map<String, Integer> jsonStrToMap = JsonStrToMap.jsonStrToMap(jsonString);
 			list.add(jsonStrToMap);
 		}
-		System.out.println("����ȫ�����");
+		System.out.println("检索全部完毕");
 		return list;
 	}
 
 	/**
-	 * ����������FindIterable<Document>
+	 * 便利迭代器FindIterable<Document>
 	 */
 	public void printFindIterable(FindIterable<Document> iterable) {
 		MongoCursor<Document> cursor = iterable.iterator();
@@ -99,6 +100,7 @@ public class MongodbImpl implements MongodbDao {
 		cursor.close();
 	}
 
+	@Override
 	public boolean insert(MongoDatabase db, String table, Document document) {
 		MongoCollection<Document> collection = db.getCollection(table);
 		collection.insertOne(document);
@@ -114,10 +116,10 @@ public class MongodbImpl implements MongodbDao {
 
 		System.out.println("count: " + count);
 		if (count == 1) {
-			System.out.println("�ĵ�����ɹ�");
+			System.out.println("文档插入成功");
 			return true;
 		} else {
-			System.out.println("�ĵ�����ɹ�");
+			System.out.println("文档插入成功");
 			return false;
 		}
 
@@ -136,12 +138,12 @@ public class MongodbImpl implements MongodbDao {
 		long preCount = collection.count();
 		collection.insertMany(documents);
 		long nowCount = collection.count();
-		System.out.println("���������: " + (nowCount - preCount));
+		System.out.println("插入的数量: " + (nowCount - preCount));
 		if ((nowCount - preCount) == documents.size()) {
-			System.out.println("�ĵ��������ɹ�");
+			System.out.println("文档插入多个成功");
 			return true;
 		} else {
-			System.out.println("�ĵ�������ʧ��");
+			System.out.println("文档插入多个失败");
 			return false;
 		}
 
@@ -152,18 +154,18 @@ public class MongodbImpl implements MongodbDao {
 		MongoCollection<Document> collection = db.getCollection(table);
 		DeleteResult deleteManyResult = collection.deleteMany(document);
 		long deletedCount = deleteManyResult.getDeletedCount();
-		System.out.println("ɾ��������: " + deletedCount);
+		System.out.println("删除的数量: " + deletedCount);
 		if (deletedCount > 0) {
-			System.out.println("�ĵ�ɾ������ɹ�");
+			System.out.println("文档删除多个成功");
 			return true;
 		} else {
-			System.out.println("�ĵ�ɾ�����ʧ��");
+			System.out.println("文档删除多个失败");
 			return false;
 		}
 	}
 
 	/**
-	 * ɾ��һ��
+	 * 删除一个
 	 * 
 	 * @param db
 	 * @param table
@@ -173,12 +175,12 @@ public class MongodbImpl implements MongodbDao {
 		MongoCollection<Document> collection = db.getCollection(table);
 		DeleteResult deleteOneResult = collection.deleteOne(document);
 		long deletedCount = deleteOneResult.getDeletedCount();
-		System.out.println("ɾ��������: " + deletedCount);
+		System.out.println("删除的数量: " + deletedCount);
 		if (deletedCount == 1) {
-			System.out.println("�ĵ�ɾ��һ���ɹ�");
+			System.out.println("文档删除一个成功");
 			return true;
 		} else {
-			System.out.println("�ĵ�ɾ��һ��ʧ��");
+			System.out.println("文档删除一个失败");
 			return false;
 		}
 	}
@@ -188,10 +190,10 @@ public class MongodbImpl implements MongodbDao {
 		try {
 			MongoCollection<Document> collection = db.getCollection(table);
 			UpdateResult updateManyResult = collection.updateMany(whereDoc, new Document("$set", updateDoc));
-			System.out.println("�ĵ����¶���ɹ�");
+			System.out.println("文档更新多个成功");
 			return true;
 		} catch (Exception e) {
-			System.out.println("�ĵ�����ʧ��");
+			System.out.println("文档更新失败");
 			return false;
 		}
 		
@@ -209,11 +211,11 @@ public class MongodbImpl implements MongodbDao {
 		try {
 			MongoCollection<Document> collection = db.getCollection(table);
 			UpdateResult updateOneResult = collection.updateOne(whereDoc, new Document("$set", updateDoc));
-			System.out.println("�ĵ�����һ���ɹ�");
+			System.out.println("文档更新一个成功");
 			System.out.println(updateOneResult.getMatchedCount());
 			return true;
 		} catch (Exception e) {
-			System.out.println("�ĵ�����ʧ��");
+			System.out.println("文档更新失败");
 			return false;
 		}
 		
@@ -224,10 +226,10 @@ public class MongodbImpl implements MongodbDao {
 			MongoCollection<Document> collection = db.getCollection(table);
 			UpdateResult updateManyResult = collection.updateMany(whereDoc, new Document("$unset", updateDoc));
 			System.out.println(updateManyResult.getMatchedCount());
-			System.out.println("�ĵ����¶���ɹ�");
+			System.out.println("文档更新多个成功");
 			return true;
 		} catch (Exception e) {
-			System.out.println("�ĵ�����ʧ��");
+			System.out.println("文档更新失败");
 			return false;
 		}
 		
@@ -237,10 +239,10 @@ public class MongodbImpl implements MongodbDao {
 		try {
 			MongoCollection<Document> collection = db.getCollection(table);
 			UpdateResult updateOneResult = collection.updateOne(whereDoc, new Document("$unset", updateDoc));
-			System.out.println("�ĵ�����һ���ɹ�");
+			System.out.println("文档更新一个成功");
 			return true;
 		} catch (Exception e) {
-			System.out.println("�ĵ�����ʧ��");
+			System.out.println("文档更新失败");
 			return false;
 		}
 		
@@ -254,7 +256,7 @@ public class MongodbImpl implements MongodbDao {
 	 */
 	public void createCol(MongoDatabase db, String table) {
 		db.createCollection(table);
-		System.out.println("���ϴ����ɹ�");
+		System.out.println("集合创建成功");
 	}
 
 	/**
@@ -265,7 +267,7 @@ public class MongodbImpl implements MongodbDao {
 	 */
 	public void dropCol(MongoDatabase db, String table) {
 		db.getCollection(table).drop();
-		System.out.println("����ɾ���ɹ�");
+		System.out.println("集合删除成功");
 
 	}
 }
