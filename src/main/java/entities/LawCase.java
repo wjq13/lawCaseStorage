@@ -9,6 +9,8 @@ public class LawCase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// 全文
 	private String fullText;
+	// 全文Id
+	private String fullTextId;
 	// 来源文件
 	private String sourceFileName;
 	// 案由
@@ -136,6 +138,14 @@ public class LawCase implements Serializable {
 
 	public void setFactFinded(String factFinded) {
 		this.factFinded = factFinded;
+	}
+
+	public String getFullTextId() {
+		return fullTextId;
+	}
+
+	public void setFullTextId(String fullTextId) {
+		this.fullTextId = fullTextId;
 	}
 
 }
