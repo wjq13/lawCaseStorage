@@ -1,5 +1,8 @@
 package Util;
 
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+
 public class Segment {
 
 	public interface CLibrary extends Library {
