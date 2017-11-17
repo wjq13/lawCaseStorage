@@ -5,8 +5,8 @@ import com.mongodb.client.*;
 
 public class MongodbHelper {
 	static final String DBName = "test";
-    static final String ServerAddress = "192.168.68.220"; 
-    static final int PORT = 30000;
+    static final String ServerAddress = "localhost"; 
+    static final int PORT = 27017;
 
     public MongodbHelper(){
     }

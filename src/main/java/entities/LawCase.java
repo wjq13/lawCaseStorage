@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public class LawCase implements Serializable {
 	/**
@@ -147,5 +149,32 @@ public class LawCase implements Serializable {
 	public void setFullTextId(String fullTextId) {
 		this.fullTextId = fullTextId;
 	}
+	
+	public final static String FullText = "fullText";
+	public final static String FullTextId = "fullTextId";
+	public final static String SourceFile = "sourceFileName";
+	public final static String CauseOfAction = "causeOfAction";
+	public final static String CodeOfCA = "codeOfCauseOfAction";
+	
+	public final static String Head = "head";
+	public final static String Litigant = "litigant";
+	public final static String LitigationRecord = "litigationRecord";
+	public final static String DefendantArgued = "defendantArgued";
+	public final static String FactFound = "factFound";
+	public final static String AnalysisProcess = "analysisProcess";
+	public final static String CaseDecision = "caseDecision";
 
+	private Map<String, String> paragraphs;
+	
+	public static String[] pNames = new String[] { Head, Litigant,
+			LitigationRecord, DefendantArgued, FactFound, AnalysisProcess,
+			CaseDecision };
+
+	public int getParagraphSize() {
+		return paragraphs.size();
+	}
+
+	public String getByPName(String pName) {
+		return paragraphs.get(pName);
+	}
 }

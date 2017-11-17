@@ -50,11 +50,13 @@ public class WriteToMongo {
 	 * @param lawCase
 	 */
 	public void writeLawCase(LawCase lawCase) {
-		Document document = new Document("text", lawCase.getFullText());
-		//
-
+		Document document = new Document(LawCase.FullTextId, lawCase.getFullTextId());
+		document.append(LawCase.CauseOfAction, lawCase.getCauseOfAction());
 		// 调segment中的方法获取长字段分词，调写分词库方法
-
+		for(int i = 0; i < lawCase.getParagraphSize(); i ++){
+			String paragraph = lawCase.getByPName(LawCase.pNames[i]);
+			
+		}
 		//
 	}
 
