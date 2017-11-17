@@ -1,15 +1,16 @@
-package service;
+package cn.edu.nju.se.lawcase.database.service;
 
 import org.bson.Document;
 
-import Util.CauseOfCaseOp;
-import Util.Segment;
+
+import cn.edu.nju.se.lawcase.database.MongodbHelper;
+import cn.edu.nju.se.lawcase.entities.LawCase;
+import cn.edu.nju.se.lawcase.util.CauseOfCaseOp;
+import cn.edu.nju.se.lawcase.util.Segment;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import dao.MongodbHelper;
-import entities.LawCase;
 
 public class WriteToMongo {
 	

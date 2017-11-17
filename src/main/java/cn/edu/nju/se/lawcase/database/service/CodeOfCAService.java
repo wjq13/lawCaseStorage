@@ -1,13 +1,14 @@
-package service;
+package cn.edu.nju.se.lawcase.database.service;
 
 import org.bson.Document;
+
+import cn.edu.nju.se.lawcase.database.MongodbHelper;
+import cn.edu.nju.se.lawcase.entities.CodeOfCA;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
-import dao.MongodbHelper;
-import entities.CodeOfCA;
 
 public class CodeOfCAService {
 

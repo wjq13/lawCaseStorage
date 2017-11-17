@@ -1,4 +1,4 @@
-package Util;
+package cn.edu.nju.se.lawcase.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

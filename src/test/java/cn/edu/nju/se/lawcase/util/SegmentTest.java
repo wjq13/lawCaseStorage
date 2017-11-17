@@ -1,6 +1,6 @@
 package cn.edu.nju.se.lawcase.util;
 
-import Util.Segment;
+import cn.edu.nju.se.lawcase.util.Segment;
 
 public class SegmentTest {
 

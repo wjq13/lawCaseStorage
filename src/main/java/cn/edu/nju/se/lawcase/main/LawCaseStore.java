@@ -1,12 +1,13 @@
-package Main;
+package cn.edu.nju.se.lawcase.main;
 
 
 import java.io.File;
 import java.util.List;
 
-import Util.XmlToLawCase;
-import entities.LawCase;
-import service.WriteToMongo;
+import cn.edu.nju.se.lawcase.database.service.WriteToMongo;
+import cn.edu.nju.se.lawcase.entities.LawCase;
+import cn.edu.nju.se.lawcase.util.XmlToLawCase;
+
 
 public class LawCaseStore {
 	public static void main(String args[]){

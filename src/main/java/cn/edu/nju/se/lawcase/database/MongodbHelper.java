@@ -1,4 +1,4 @@
-package dao;
+package cn.edu.nju.se.lawcase.database;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.*;

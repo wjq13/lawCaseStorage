@@ -1,7 +1,7 @@
 package cn.edu.nju.se.lawcase.service;
 
-import entities.CodeOfCA;
-import service.CodeOfCAService;
+import cn.edu.nju.se.lawcase.database.service.CodeOfCAService;
+import cn.edu.nju.se.lawcase.entities.CodeOfCA;
 
 public class ReadCodeTree {
 

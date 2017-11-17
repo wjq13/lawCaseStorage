@@ -1,4 +1,4 @@
-package Util;
+package cn.edu.nju.se.lawcase.util;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +8,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import entities.LawCase;
+import cn.edu.nju.se.lawcase.entities.LawCase;
+
 
 public class XmlToLawCase {
 	

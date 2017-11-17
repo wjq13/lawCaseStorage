@@ -6,9 +6,10 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import service.CodeOfCAService;
+import cn.edu.nju.se.lawcase.database.service.CodeOfCAService;
+import cn.edu.nju.se.lawcase.entities.CodeOfCA;
 
-import entities.CodeOfCA;
+
 
 public class InitializeCodeOfCA {
 

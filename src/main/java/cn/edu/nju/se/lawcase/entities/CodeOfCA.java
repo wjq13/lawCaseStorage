@@ -1,4 +1,4 @@
-package entities;
+package cn.edu.nju.se.lawcase.entities;
 
 import java.util.ArrayList;
 import java.util.List;

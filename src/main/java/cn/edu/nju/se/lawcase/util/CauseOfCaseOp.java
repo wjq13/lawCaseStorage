@@ -1,6 +1,6 @@
-package Util;
+package cn.edu.nju.se.lawcase.util;
 
-import service.CodeOfCAService;
+import cn.edu.nju.se.lawcase.database.service.CodeOfCAService;
 
 public class CauseOfCaseOp {
 	

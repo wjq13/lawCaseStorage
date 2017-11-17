@@ -1,4 +1,4 @@
-package dao;
+package cn.edu.nju.se.lawcase.database;
 
 import java.util.Map;
 
