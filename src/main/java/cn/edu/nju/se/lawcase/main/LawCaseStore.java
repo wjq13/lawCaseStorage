@@ -7,12 +7,16 @@ import java.util.List;
 import cn.edu.nju.se.lawcase.database.service.LawCaseService;
 import cn.edu.nju.se.lawcase.database.service.ParagraphService;
 import cn.edu.nju.se.lawcase.entities.LawCase;
+import cn.edu.nju.se.lawcase.service.InitializeCodeOfCA;
 import cn.edu.nju.se.lawcase.util.Segment;
 import cn.edu.nju.se.lawcase.util.XmlToLawCase;
 
 
 public class LawCaseStore {
 	public static void main(String args[]){
+		//用于初始化案由代码表
+		//InitializeCodeOfCA.main(args);
+		
 		String filepath = "E:\\17级工程硕士管理\\民事案件\\";//文件夹路径
 		
 		List<File> files = XmlToLawCase.getFileList(filepath);
