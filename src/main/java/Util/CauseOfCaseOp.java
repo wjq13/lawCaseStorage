@@ -1,16 +1,16 @@
 package Util;
 
-import java.util.Map;
+import service.CodeOfCAService;
 
 public class CauseOfCaseOp {
 	
-	//根据案由取案由树
+	private static CodeOfCAService ccas = new CodeOfCAService();
 	/**
-	 * @param anyou 案由
+	 * @param codeOfCA 案由代码
 	 * @return 相应案由树
 	 */
-	public static Map<String, String> getLevelTree(String anyou){
-		return null;
+	public static String getLevelTree(String codeOfCA){
+		return ccas.readTreeOfCodeOfCA(codeOfCA);
 	}
 	
 }

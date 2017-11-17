@@ -98,6 +98,9 @@ public class Segment {
 		String[] wordsWithTagArray = wordsWithTag.split(spliter);
 		String words = "", tags = "";
 		for(String wordWithTag : wordsWithTagArray){
+			if(wordWithTag.equals("")){
+				continue;
+			}
 			String[] wordAndTag = wordWithTag.split("/");
 			words += wordAndTag[0] + " ";
 			tags += "/" + wordAndTag[1] + " ";

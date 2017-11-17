@@ -16,7 +16,7 @@ public class XmlToLawCase {
 		List<File> filelist = new ArrayList<>();
 		File dir = new File(strPath);
 		File[] files = dir.listFiles();
-		System.out.println(files.length);
+		//System.out.println(files.length);
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
 				String fileName = files[i].getName();
@@ -44,7 +44,7 @@ public class XmlToLawCase {
 		Attribute value = null;
 		LawCase lawCase = new LawCase();
 		lawCase.setSourceFileName(file.getName());
-		System.out.println(file.getName());
+		//System.out.println(file.getName());
 		root = null;
 		ele = null;
 		value = null;
@@ -53,6 +53,7 @@ public class XmlToLawCase {
 				domdocument = reader.read(file);
 
 				root = domdocument.getRootElement().element("QW");
+				lawCase.setFullText(root.attribute("value").getValue());
 
 				ele = root.element("WS");
 				if (ele != null)
@@ -78,16 +79,16 @@ public class XmlToLawCase {
 				if (ele != null) {
 					ele = ele.element("AY");
 					if (ele != null) {
-						ele = ele.element("WZAY");
-						if (ele != null)
-							value = ele.attribute("value");
+						Element eleTmp = ele.element("WZAY");
+						if (eleTmp != null)
+							value = eleTmp.attribute("value");
 						else
 							value.setValue("");
 						lawCase.setCauseOfAction(value.getValue());
 						
-						ele = ele.element("AYDM");
-						if (ele != null)
-							value = ele.attribute("value");
+						eleTmp = ele.element("AYDM");
+						if (eleTmp != null)
+							value = eleTmp.attribute("value");
 						else
 							value.setValue("");
 						lawCase.setCodeOfCauseOfAction(value.getValue());
@@ -148,6 +149,8 @@ public class XmlToLawCase {
 				else
 					value.setValue("");
 				lawCase.setEnd(value.getValue());
+				
+				return lawCase;
 			} catch (DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,6 +158,5 @@ public class XmlToLawCase {
 
 		}
 		return null;
-
 	}
 }
