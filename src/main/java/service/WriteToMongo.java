@@ -2,6 +2,8 @@ package service;
 
 import org.bson.Document;
 
+import Util.Segment;
+
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -14,6 +16,8 @@ public class WriteToMongo {
 	MongoDatabase database;
 	MongoCollection<Document> lawCaseCollection;
 	MongoCollection<Document> fullTextCollection;
+	
+	Segment segment;
 
 	public WriteToMongo() {
 		helper = new MongodbHelper();
@@ -21,6 +25,9 @@ public class WriteToMongo {
 		database = client.getDatabase("lawCase");
 		lawCaseCollection = database.getCollection("lawcase");
 		fullTextCollection = database.getCollection("fullText");
+		
+		segment = new Segment();
+		segment.init();
 	}
 
 	/**
@@ -32,7 +39,7 @@ public class WriteToMongo {
 	 */
 	public void writeFullText(LawCase lawCase) {
 		Document document = new Document("text", lawCase.getFullText());
-		lawCaseCollection.insertOne(document);
+		fullTextCollection.insertOne(document);
 		lawCase.setFullTextId(document.get("_id").toString());
 		// 把生成的全文表id,set进lawcase里
 	}
