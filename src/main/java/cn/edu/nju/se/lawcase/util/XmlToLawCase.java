@@ -13,7 +13,7 @@ import cn.edu.nju.se.lawcase.entities.LawCase;
 
 public class XmlToLawCase {
 	
-	public List<File> getFileList(String strPath) {
+	public static List<File> getFileList(String strPath) {
 		List<File> filelist = new ArrayList<>();
 		File dir = new File(strPath);
 		File[] files = dir.listFiles();
@@ -34,7 +34,7 @@ public class XmlToLawCase {
 		return filelist;
 	}
 	
-	public LawCase transOneXml(File file) {
+	public static LawCase transOneXml(File file) {
 		// 创建SAXReader对象
 		SAXReader reader = new SAXReader();
 		// 读取文件 转换成Document

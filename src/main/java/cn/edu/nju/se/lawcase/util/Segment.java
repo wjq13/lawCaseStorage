@@ -34,7 +34,7 @@ public class Segment {
 	 * 把Segment当成一个对象使用，需要初始化；这里提供初始化工作。之后可以使用这个对象处理所有的句子
 	 * @return
 	 */
-	public boolean init(){
+	public static boolean init(){
 		String argu = "";
 		String system_charset = "utf8";
 		int charset_type = 1;
@@ -58,7 +58,7 @@ public class Segment {
 	 * 一次使用完之后需要推出分词模式
 	 * @return
 	 */
-	public boolean exit(){
+	public static boolean exit(){
 		try {
 			CLibrary.Instance.NLPIR_Exit();
 			return true;
@@ -78,7 +78,7 @@ public class Segment {
 	 * 	3.关键词串
 	 * 	4.关键词的postag串
 	 */
-	public String[] processSentenceNLPIR(String content){
+	public static String[] processSentenceNLPIR(String content){
 		String wordsWithTag = CLibrary.Instance.NLPIR_ParagraphProcess(content, 1);
 		String keywordsWithTag = CLibrary.Instance.NLPIR_GetKeyWords(content, 15, true);
 
@@ -94,7 +94,7 @@ public class Segment {
 	 * @param spliter 串内的分隔符，原文是空格，关键词是“#”
 	 * @return 单词串和标签串的数组
 	 */
-	private String[] processWordWithTagsNLPIR(String wordsWithTag, String spliter){
+	private static String[] processWordWithTagsNLPIR(String wordsWithTag, String spliter){
 		String[] wordsWithTagArray = wordsWithTag.split(spliter);
 		String words = "", tags = "";
 		for(String wordWithTag : wordsWithTagArray){
@@ -124,7 +124,7 @@ public class Segment {
 	 * @param mouduanchangwen 某段长信息
 	 * @return 生成的分词信息:
 	 */
-	public String[] getSegmentation(String originalText){
+	public static String[] getSegmentation(String originalText){
 		return processSentenceNLPIR(originalText);
 	}
 	
