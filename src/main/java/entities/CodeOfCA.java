@@ -11,6 +11,10 @@ public class CodeOfCA {
 	
 	private List<String> codeTree;
 
+	public CodeOfCA(){
+		this.codeTree = new ArrayList<String>();
+	}
+	
 	public CodeOfCA(String currentCode, String currentCA, String fatherCode){
 		this.currentCode = currentCode;
 		this.currentCauseofAction = currentCA;
@@ -49,6 +53,14 @@ public class CodeOfCA {
 
 	public void setCodeTree(List<String> codeTree) {
 		this.codeTree = codeTree;
+	}
+	
+	public void setCodeTree(String codeTree) {
+		String[] tree = codeTree.split("-");
+		for(int i = 1; i < tree.length; i ++){
+			this.codeTree.add(tree[i]);
+		}
+		this.setFatherCode(this.codeTree.get(0));
 	}
 
 	public String getTreeString(){

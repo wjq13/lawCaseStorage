@@ -28,10 +28,15 @@ public class InitializeCodeOfCA {
 		// TODO Auto-generated method stub
 		for(String currentCode : allCodes.keySet()){
 			CodeOfCA tmpCca = allCodes.get(currentCode);
+			tmpCca.getCodeTree().add(currentCode);
+			
 			String rootCode = tmpCca.getFatherCode();
+			if(allCodes.get(rootCode) == null){
+				codeService.writeEachCode(tmpCca);
+				continue;
+			}
 			
 			if(allCodes.get(rootCode).getTreeString().contains("9000")){
-				tmpCca.getCodeTree().add(rootCode);
 				tmpCca.getCodeTree().addAll(allCodes.get(rootCode).getCodeTree());
 				codeService.writeEachCode(tmpCca);
 				
@@ -53,7 +58,7 @@ public class InitializeCodeOfCA {
 		// TODO Auto-generated method stub
 		Map<String, CodeOfCA> codes = new HashMap<String, CodeOfCA>();
 		try{
-			BufferedReader codeReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			BufferedReader codeReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "GBK"));
 			String line = "";
 			while((line = codeReader.readLine()) != null){
 				String[] components = line.split("\t");

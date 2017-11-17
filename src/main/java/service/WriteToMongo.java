@@ -11,20 +11,15 @@ import dao.MongodbHelper;
 import entities.LawCase;
 
 public class WriteToMongo {
-	MongodbHelper helper;
-	MongoClient client;
-	MongoDatabase database;
+	
 	MongoCollection<Document> lawCaseCollection;
 	MongoCollection<Document> fullTextCollection;
 	
 	Segment segment;
 
 	public WriteToMongo() {
-		helper = new MongodbHelper();
-		client = helper.getMongoClient();
-		database = client.getDatabase("lawCase");
-		lawCaseCollection = database.getCollection("lawcase");
-		fullTextCollection = database.getCollection("fullText");
+		lawCaseCollection = MongodbHelper.getMongoDataBase().getCollection("lawcase");
+		fullTextCollection = MongodbHelper.getMongoDataBase().getCollection("fullText");
 		
 		segment = new Segment();
 		segment.init();

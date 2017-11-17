@@ -2,26 +2,19 @@ package service;
 
 import org.bson.Document;
 
-import com.mongodb.MongoClient;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import dao.MongodbHelper;
 import entities.CodeOfCA;
-import entities.LawCase;
 
 public class CodeOfCAService {
 
-	MongodbHelper helper;
-	MongoClient client;
-	MongoDatabase database;
 	MongoCollection<Document> codeOfCACollection;
 	
 	public CodeOfCAService(){
-		helper = new MongodbHelper();
-		client = helper.getMongoClient();
-		database = client.getDatabase("lawCase");
-		codeOfCACollection = database.getCollection("codeofca");
+		codeOfCACollection = MongodbHelper.getMongoDataBase().getCollection("codeofca");
 	}
 
 	public void writeEachCode(CodeOfCA code) {
@@ -30,5 +23,23 @@ public class CodeOfCAService {
 		document.append("tree", code.getTreeString());
 		
 		codeOfCACollection.insertOne(document);
+	}
+	
+	public CodeOfCA readCodeOfCA(String currentCode){
+		FindIterable<Document> find = codeOfCACollection.find(new BasicDBObject("currentcode", currentCode));
+		Document codeOfCADoc = find.first();
+		CodeOfCA codeOfCA = new CodeOfCA();
+		codeOfCA.setCurrentCode(codeOfCADoc.getString("currentcode"));
+		codeOfCA.setCodeTree(codeOfCADoc.getString("tree"));
+		codeOfCA.setCurrentCauseofAction(codeOfCADoc.getString("causeofaction"));
+		
+		return codeOfCA;
+	}
+	
+	public String readTreeOfCodeOfCA(String currentCode){
+		FindIterable<Document> find = codeOfCACollection.find(new BasicDBObject("currentcode", currentCode));
+		Document codeOfCADoc = find.first();
+		
+		return codeOfCADoc.getString("tree");
 	}
 }

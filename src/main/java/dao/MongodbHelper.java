@@ -4,49 +4,51 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.*;
 
 public class MongodbHelper {
-	static final String DBName = "test";
-    static final String ServerAddress = "localhost"; 
-    static final int PORT = 27017;
+	static final String DBName = "lawCase";
+	static final String ServerAddress = "localhost";
+	static final int PORT = 27017;
 
-    public MongodbHelper(){
-    }
+	private static MongoClient mongoClient = null;
+	private static MongoDatabase mongoDataBase = null;
 
-    public MongoClient getMongoClient( ){
-        MongoClient mongoClient = null;
-        try {
-              // 连接到 mongodb 服务
-            mongoClient = new MongoClient(ServerAddress, PORT); 
-            System.out.println("Connect to mongodb successfully");
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return mongoClient;
-    }
+	private static MongoClient getMongoClient() {
+		try {
+			// 连接到 mongodb 服务
+			if (mongoClient == null) {
+				mongoClient = new MongoClient(ServerAddress, PORT);
+				System.out.println("Connect to mongodb successfully");
+			}
+			return mongoClient;
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+	}
 
-    public MongoDatabase getMongoDataBase(MongoClient mongoClient) {  
-        MongoDatabase mongoDataBase = null;
-        try {  
-            if (mongoClient != null) {  
-                  // 连接到数据库
-                mongoDataBase = mongoClient.getDatabase(DBName);  
-                System.out.println("Connect to DataBase successfully");
-            } else {  
-                throw new RuntimeException("MongoClient不能够为空");  
-            }  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }
-        return mongoDataBase;
-    }  
+	public static MongoDatabase getMongoDataBase() {
+		try {
+			if (mongoDataBase == null) {
+				// 连接到数据库
+				mongoClient = getMongoClient();
+				mongoDataBase = mongoClient.getDatabase(DBName);
+				System.out.println("Connect to DataBase successfully");
+			} 
+			return mongoDataBase;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    public void closeMongoClient(MongoDatabase mongoDataBase,MongoClient mongoClient ) {  
-        if (mongoDataBase != null) {  
-            mongoDataBase = null;  
-        }  
-        if (mongoClient != null) {  
-            mongoClient.close();  
-        }  
-        System.out.println("CloseMongoClient successfully");  
+	public void closeMongoClient(MongoDatabase mongoDataBase,
+			MongoClient mongoClient) {
+		if (mongoDataBase != null) {
+			mongoDataBase = null;
+		}
+		if (mongoClient != null) {
+			mongoClient.close();
+		}
+		System.out.println("CloseMongoClient successfully");
 
-    }  
+	}
 }
