@@ -1,12 +1,14 @@
 package Util;
 
+import java.io.UnsupportedEncodingException;
+
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 public class Segment {
 
 	public interface CLibrary extends Library {
-		CLibrary Instance = (CLibrary) Native.loadLibrary("SegmentationJars/file/NLPIR", CLibrary.class);
+		CLibrary Instance = (CLibrary) Native.loadLibrary("SegmentationJars/NLPIR", CLibrary.class);
 		// 定义并初始化接口的静态变量 这一个语句是来加载 dll 的，注意 dll 文件的路径,可以是绝对路径也可以是相对路径，只需要填写 dll 的文件名，不能加后缀。
 
 		// 初始化函数声明
@@ -22,15 +24,21 @@ public class Segment {
 		public void NLPIR_Exit();
 	}
 
-	public static String[] processSentenceNLPIR(String content) throws Exception {
+	public static String[] processSentenceNLPIR(String content){
 		String argu = "";
 		String system_charset = "utf8";
 		int charset_type = 1;
-		int init_flag = CLibrary.Instance.NLPIR_Init(argu.getBytes(system_charset),
-				charset_type, "0".getBytes(system_charset));
-		if (0 == init_flag) {
+		int init_flag;
+		try {
+			init_flag = CLibrary.Instance.NLPIR_Init(argu.getBytes(system_charset),
+					charset_type, "0".getBytes(system_charset));
+			if (0 == init_flag) {
 			System.out.println("初始化失败！");
 			return null;
+		}
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		String[] wordsandkeys = new String[2];
