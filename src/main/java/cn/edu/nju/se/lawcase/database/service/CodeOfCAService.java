@@ -38,7 +38,6 @@ public class CodeOfCAService {
 		FindIterable<Document> find = codeOfCACollection
 				.find(new BasicDBObject("currentcode", currentCode));
 		Document codeOfCADoc = find.first();
-
 		return codeOfCADoc.getString("tree");
 	}
 }

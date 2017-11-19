@@ -17,7 +17,7 @@ public class LawCaseStore {
 		//用于初始化案由代码表
 		//InitializeCodeOfCA.main(args);
 		
-		String filepath = "E:\\17级工程硕士管理\\民事案件\\";//文件夹路径
+		String filepath = "E://研究生//项目组//huayu//test";//文件夹路径
 		
 		List<File> files = XmlToLawCase.getFileList(filepath);
 		Segment.init();

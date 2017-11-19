@@ -17,10 +17,11 @@ public class XmlToLawCase {
 		List<File> filelist = new ArrayList<>();
 		File dir = new File(strPath);
 		File[] files = dir.listFiles();
-		//System.out.println(files.length);
+		System.out.println(files.length);
 		if (files != null) {
 			for (int i = 0; i < files.length; i++) {
 				String fileName = files[i].getName();
+				System.out.println(fileName);
 				if (files[i].isDirectory()) {
 					getFileList(files[i].getAbsolutePath());
 				} else if (fileName.endsWith("xml")) {

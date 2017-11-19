@@ -17,12 +17,18 @@ public class ParagraphService {
 		Document document = new Document(LawCase.FullTextId, lawCase.getFullTextId());
 		document.append(LawCase.CauseOfAction, lawCase.getCauseOfAction());
 		document.append(LawCase.CodeOfCA, lawCase.getCodeOfCauseOfAction());
-		document.append("codeofcatree", CodeOfCAService.readTreeOfCodeOfCA(lawCase.getCodeOfCauseOfAction()));
+		if(lawCase.getCodeOfCauseOfAction()==""){
+			document.append("codeofcatree", "");
+		}else{
+			document.append("codeofcatree", CodeOfCAService.readTreeOfCodeOfCA(lawCase.getCodeOfCauseOfAction()));
+		}
+		
 		// 调segment中的方法获取长字段分词，调写分词库方法
 		for(int i = 0; i < lawCase.getParagraphSize(); i ++){
 			String paragraph = lawCase.getByPName(LawCase.pNames[i]);
 			Document paraDoc = new Document("text", paragraph);
 			String[] segmentations = Segment.getSegmentation(paragraph);
+			System.out.println(segmentations[0]);
 			String segId = SegmentService.writeSegmentation(segmentations);
 			paraDoc.append("segmentid", segId);
 			
