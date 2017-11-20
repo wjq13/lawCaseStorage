@@ -20,12 +20,10 @@ public class InitializeCodeOfCA {
 		// TODO Auto-generated method stub
 		Map<String, CodeOfCA> allCodes = readFromFile("Resources/code of cause action.txt");
 		
-		CodeOfCAService codeService = new CodeOfCAService();
-		
-		updateAllCodes(allCodes, codeService);
+		updateAllCodes(allCodes);
 	}
 
-	private static void updateAllCodes(Map<String, CodeOfCA> allCodes, CodeOfCAService codeService) {
+	private static void updateAllCodes(Map<String, CodeOfCA> allCodes) {
 		// TODO Auto-generated method stub
 		for(String currentCode : allCodes.keySet()){
 			CodeOfCA tmpCca = allCodes.get(currentCode);
@@ -33,13 +31,13 @@ public class InitializeCodeOfCA {
 			
 			String rootCode = tmpCca.getFatherCode();
 			if(allCodes.get(rootCode) == null){
-				codeService.writeEachCode(tmpCca);
+				CodeOfCAService.writeEachCode(tmpCca);
 				continue;
 			}
 			
 			if(allCodes.get(rootCode).getTreeString().contains("9000")){
 				tmpCca.getCodeTree().addAll(allCodes.get(rootCode).getCodeTree());
-				codeService.writeEachCode(tmpCca);
+				CodeOfCAService.writeEachCode(tmpCca);
 				
 				continue;
 			}
@@ -51,7 +49,7 @@ public class InitializeCodeOfCA {
 			}
 			tmpCca.getCodeTree().add(rootCode);
 			
-			codeService.writeEachCode(tmpCca);
+			CodeOfCAService.writeEachCode(tmpCca);
 		}
 	}
 

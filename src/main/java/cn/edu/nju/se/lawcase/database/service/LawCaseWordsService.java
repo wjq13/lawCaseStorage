@@ -15,6 +15,10 @@ import com.mongodb.client.model.Filters;
 
 public class LawCaseWordsService {
 
+	/*
+	 * 用于操作案件中相关段落词语
+	 */
+	
 	private static MongoCollection<Document> lawcasewordsCollection = MongodbHelper
 			.getMongoDataBase().getCollection("lawcasewords");
 
