@@ -18,7 +18,7 @@ public class CodeOfCAService {
 		Document document = new Document("currentcode", code.getCurrentCode());
 		document.append("causeofaction", code.getCurrentCauseofAction());
 		document.append("tree", code.getTreeString());
-
+		
 		codeOfCACollection.insertOne(document);
 	}
 
