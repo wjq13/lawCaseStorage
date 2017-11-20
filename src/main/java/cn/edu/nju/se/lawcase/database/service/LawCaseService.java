@@ -5,6 +5,7 @@ import org.bson.Document;
 import cn.edu.nju.se.lawcase.database.MongodbHelper;
 import cn.edu.nju.se.lawcase.entities.LawCase;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 public class LawCaseService {
@@ -18,5 +19,7 @@ public class LawCaseService {
 		lawCase.setFullTextId(document.get("_id").toString());
 	}
 	
-	
+	public static FindIterable<Document> findALL(){
+		return lawCaseCollection.find();
+	}
 }
