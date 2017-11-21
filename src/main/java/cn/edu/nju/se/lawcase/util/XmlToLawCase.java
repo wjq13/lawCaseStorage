@@ -9,6 +9,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import cn.edu.nju.se.lawcase.entities.LawCase;
+import cn.edu.nju.se.lawcase.entities.LawReference;
 
 
 public class XmlToLawCase {
@@ -134,6 +135,10 @@ public class XmlToLawCase {
 				ele = root.element("CPFXGC");
 				if (ele != null){
 					value = ele.attribute("value");
+					
+					List<LawReference> lawReferences = new ArrayList<LawReference>();
+					ParseLawReferences.generateLawReferences(ele, lawReferences);
+					lawCase.setLawReferences(lawReferences);
 				}else{
 					value.setValue("");
 				}

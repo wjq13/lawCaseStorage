@@ -2,12 +2,12 @@ package cn.edu.nju.se.lawcase.entities;
 
 public class LawReference {
 
-	private String lawName;
-	private String levelOneTiao;
-	private String levelTwoKuan;
-	private String levelThreeXiang;
+	private String lawName = "";
+	private String levelOneTiao = "";
+	private String levelTwoKuan = "";
+	private String levelThreeXiang = "";
 	
-	private String contentLevenOne;
+	private String contentLevenOne = "";
 
 	public String getLawName() {
 		return lawName;
