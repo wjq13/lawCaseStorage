@@ -132,10 +132,11 @@ public class XmlToLawCase {
 				}
 
 				ele = root.element("CPFXGC");
-				if (ele != null)
+				if (ele != null){
 					value = ele.attribute("value");
-				else
+				}else{
 					value.setValue("");
+				}
 				lawCase.setAnalysisProcess(value.getValue());
 
 				ele = root.element("PJJG");

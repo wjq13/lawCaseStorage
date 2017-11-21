@@ -16,6 +16,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
 public class TfIdfService {
+	
 	private static MongoCollection<Document> tfidfCollection = MongodbHelper
 			.getMongoDataBase().getCollection("tf_idf");
 
