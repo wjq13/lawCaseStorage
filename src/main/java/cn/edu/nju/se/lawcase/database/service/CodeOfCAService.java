@@ -8,6 +8,7 @@ import cn.edu.nju.se.lawcase.entities.CodeOfCA;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 public class CodeOfCAService {
 
@@ -37,7 +38,12 @@ public class CodeOfCAService {
 	public static String readTreeOfCodeOfCA(String currentCode) {
 		FindIterable<Document> find = codeOfCACollection
 				.find(new BasicDBObject("currentcode", currentCode));
-		Document codeOfCADoc = find.first();
-		return codeOfCADoc.getString("tree");
+		MongoCursor<Document> cursor= find.iterator();
+		if(cursor.hasNext()){
+			return cursor.next().getString("tree");
+		}else{
+			return "";
+		}
+		
 	}
 }

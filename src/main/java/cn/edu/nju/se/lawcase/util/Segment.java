@@ -102,6 +102,9 @@ public class Segment {
 				continue;
 			}
 			String[] wordAndTag = wordWithTag.split("/");
+			if(wordAndTag.length<2){
+				continue;
+			}
 			words += wordAndTag[0] + " ";
 			tags += "/" + wordAndTag[1] + " ";
 		}

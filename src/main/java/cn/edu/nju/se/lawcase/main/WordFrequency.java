@@ -1,5 +1,9 @@
 package cn.edu.nju.se.lawcase.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.bson.Document;
 
 import cn.edu.nju.se.lawcase.database.service.LawCaseWordsService;
@@ -14,6 +18,8 @@ import com.mongodb.client.FindIterable;
 
 public class WordFrequency {
 
+	
+	static Map<String,SingleWord> wordCount = new HashMap<String, SingleWord>();
 	public static void main(String args[]){
 		
 		FindIterable<Document> lawcaseParagraphs = ParagraphService.findALL();
@@ -26,13 +32,26 @@ public class WordFrequency {
 				singleWord.setWord(word);
 				singleWord.setCurrentDocID(lawcaseWords.getLawcaseID());
 				singleWord.setCurrentDocCount(lawcaseWords.getWordCountMap().get(word));
+				if(wordCount.get(word)!=null){
+					singleWord.setDocCount(1+wordCount.get(word).getDocCount());
+					wordCount.replace(word, singleWord);
+				}else{
+					singleWord.setDocCount(1);
+					wordCount.put(word, singleWord);
+				}
 				
-				singleWord.setDocCount(1);
-				
-				SingleWordService.updateSingleWord(singleWord);
+//				SingleWord singleWord = new SingleWord();
+//				singleWord.setWord(word);
+//				singleWord.setCurrentDocID(lawcaseWords.getLawcaseID());
+//				singleWord.setCurrentDocCount(lawcaseWords.getWordCountMap().get(word));
+//				
+//				singleWord.setDocCount(1);
+//				
+//				SingleWordService.updateSingleWord(singleWord);
 			}
+			
 		}
-		
+		SingleWordService.updateSingleWords(wordCount);
 	}
 
 	public static LawCaseWords generateLawCaseTF(Document lawcaseParagraph) {
@@ -44,8 +63,10 @@ public class WordFrequency {
 		lawcaseWords.setLawcaseID(lawcaseId);
 		
 		for(String paragraphName : LawCase.pNamesTF){
-			String segID = ((Document)lawcaseParagraph.get(paragraphName)).get("segmentid").toString();
-			allWords += SegmentService.getWordsStringByID(segID);
+			if(!(lawcaseParagraph.get(paragraphName).toString().isEmpty())){
+				String segID = ((Document)lawcaseParagraph.get(paragraphName)).get("segmentid").toString();
+				allWords += SegmentService.getWordsStringByID(segID);
+			}
 		}
 		lawcaseWords.setAllWords(allWords);
 		lawcaseWords.generateWordCountMap();
