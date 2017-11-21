@@ -23,6 +23,7 @@ public class LawCaseService {
 	 */
 	public static void writeFullText(LawCase lawCase) {
 		Document document = new Document("text", lawCase.getFullText());
+		document.append("filepath", lawCase.getFilePath());
 		lawCaseCollection.insertOne(document);
 		lawCase.setFullTextId(document.get("_id").toString());
 	}

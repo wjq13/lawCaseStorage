@@ -23,6 +23,7 @@ public class LawCaseStore {
 		
 		for(File file:files){
 			LawCase lawCase = XmlToLawCase.transOneXml(file);
+			lawCase.setFilePath(file.getAbsolutePath());
 			lawCase.setParagraphs();
 			
 			LawCaseService.writeFullText(lawCase);

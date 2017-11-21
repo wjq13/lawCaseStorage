@@ -1,7 +1,9 @@
 package cn.edu.nju.se.lawcase.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LawCase implements Serializable {
@@ -166,6 +168,9 @@ public class LawCase implements Serializable {
 
 	private Map<String, String> paragraphs;
 	private LawCaseWords lawcaseTF;
+	private List<LawReference> lawReferences;
+	
+	private String filePath;
 
 	public static String[] pNames = new String[] { Head, LitigationRecord,
 			DefendantArgued, FactFound, AnalysisProcess, CaseDecision };
@@ -174,6 +179,7 @@ public class LawCase implements Serializable {
 	
 	public LawCase(){
 		this.lawcaseTF = null;
+		this.lawReferences = new ArrayList<LawReference>();
 	}
 	
 	public void setParagraphs() {
@@ -201,5 +207,21 @@ public class LawCase implements Serializable {
 
 	public void setLawcaseTF(LawCaseWords lawcaseTF) {
 		this.lawcaseTF = lawcaseTF;
+	}
+
+	public List<LawReference> getLawReferences() {
+		return lawReferences;
+	}
+
+	public void setLawReferences(List<LawReference> lawReferences) {
+		this.lawReferences = lawReferences;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }
