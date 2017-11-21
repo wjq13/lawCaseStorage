@@ -5,6 +5,10 @@ import java.util.List;
 
 public class CodeOfCA {
 
+	/**
+	 * 案由代码类，包括案由代码、案由内容和父代码、到根代码的代码树
+	 */
+	
 	private String currentCode;
 	private String currentCauseofAction;
 	private String fatherCode;
