@@ -1,19 +1,17 @@
 package cn.edu.nju.se.lawcase.main;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
 
-import com.mongodb.client.FindIterable;
-
 import cn.edu.nju.se.lawcase.database.service.LawCaseWordsService;
 import cn.edu.nju.se.lawcase.database.service.SingleWordService;
 import cn.edu.nju.se.lawcase.database.service.TfIdfService;
 import cn.edu.nju.se.lawcase.entities.LawCaseWordsTfIdf;
-import cn.edu.nju.se.lawcase.entities.SingleWord;
+
+import com.mongodb.client.FindIterable;
 
 public class TFIDF {
 

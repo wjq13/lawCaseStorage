@@ -12,10 +12,7 @@ import cn.edu.nju.se.lawcase.util.XmlToLawCase;
 
 public class LawCaseStore {
 	public static void main(String args[]) {
-		// 用于初始化案由代码表
-		// InitializeCodeOfCA.main(args);
-
-		String filepath = "F://研一//民事一审测试集";// 文件夹路径
+		String filepath = "E:\\17级工程硕士管理\\民事一审测试集\\";// 文件夹路径
 
 		List<File> files = XmlToLawCase.getFileList(filepath);
 		Segment.init();

@@ -1,19 +1,14 @@
 package cn.edu.nju.se.lawcase.database.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import cn.edu.nju.se.lawcase.database.MongodbHelper;
 import cn.edu.nju.se.lawcase.entities.LawCaseWordsTfIdf;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Filters;
 
 public class TfIdfService {
 	

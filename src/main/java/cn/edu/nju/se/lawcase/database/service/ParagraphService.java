@@ -33,7 +33,7 @@ public class ParagraphService {
 			else{
 				Document paraDoc = new Document("text", paragraph);
 				String[] segmentations = Segment.getSegmentation(paragraph);
-				System.out.println(segmentations[0]);
+				//System.out.println(segmentations[0]);
 				String segId = SegmentService.writeSegmentation(segmentations);
 				paraDoc.append("segmentid", segId);
 				

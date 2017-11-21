@@ -3,7 +3,6 @@ package cn.edu.nju.se.lawcase.main;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.bson.Document;
 
 import cn.edu.nju.se.lawcase.database.service.LawCaseWordsService;
