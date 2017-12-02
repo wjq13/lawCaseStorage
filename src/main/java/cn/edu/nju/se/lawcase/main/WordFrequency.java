@@ -33,7 +33,7 @@ public class WordFrequency {
 				singleWord.setCurrentDocCount(lawcaseWords.getWordCountMap().get(word));
 				if(wordCount.get(word)!=null){
 					singleWord.setDocCount(1+wordCount.get(word).getDocCount());
-					wordCount.replace(word, singleWord);
+					wordCount.put(word, singleWord);
 				}else{
 					singleWord.setDocCount(1);
 					wordCount.put(word, singleWord);

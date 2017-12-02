@@ -39,6 +39,8 @@ public class LawCase implements Serializable {
 	private String decisionResult;
 	// 文尾
 	private String end;
+	// 标题
+	private String title;
 
 	public String getFullText() {
 		return fullText;
@@ -161,6 +163,7 @@ public class LawCase implements Serializable {
 	public final static String Head = "head";
 	public final static String Litigant = "litigant";
 	public final static String LitigationRecord = "litigationRecord";
+	public final static String PlaintiffAlleges = "plaintiffAlleges";
 	public final static String DefendantArgued = "defendantArgued";
 	public final static String FactFound = "factFound";
 	public final static String AnalysisProcess = "analysisProcess";
@@ -169,24 +172,24 @@ public class LawCase implements Serializable {
 	private Map<String, String> paragraphs;
 	private LawCaseWords lawcaseTF;
 	private List<LawReference> lawReferences;
-	
+
 	private String filePath;
 
-	public static String[] pNames = new String[] { Head, LitigationRecord,
-			DefendantArgued, FactFound, AnalysisProcess, CaseDecision };
+	public static String[] pNames = new String[] { Head, LitigationRecord, PlaintiffAlleges, DefendantArgued, FactFound,
+			AnalysisProcess, CaseDecision };
 
-	public static String[] pNamesTF = new String[] {LitigationRecord, DefendantArgued, FactFound};
-	
-	public LawCase(){
+	public static String[] pNamesTF = new String[] { LitigationRecord, PlaintiffAlleges, DefendantArgued, FactFound };
+
+	public LawCase() {
 		this.lawcaseTF = null;
 		this.lawReferences = new ArrayList<LawReference>();
 	}
-	
+
 	public void setParagraphs() {
 		this.paragraphs = new HashMap<String, String>();
 		this.paragraphs.put(LawCase.Head, this.getBeginning());
-		this.paragraphs.put(LawCase.LitigationRecord,
-				this.getLitigationRecord());
+		this.paragraphs.put(LawCase.LitigationRecord, this.getLitigationRecord());
+		this.paragraphs.put(LawCase.PlaintiffAlleges, this.getPlaintiffAlleges());
 		this.paragraphs.put(LawCase.DefendantArgued, this.getDefendantArgued());
 		this.paragraphs.put(LawCase.FactFound, this.getFactFinded());
 		this.paragraphs.put(LawCase.AnalysisProcess, this.getAnalysisProcess());
@@ -223,5 +226,13 @@ public class LawCase implements Serializable {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

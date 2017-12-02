@@ -48,6 +48,7 @@ public class XmlToLawCase {
 		LawCase lawCase = new LawCase();
 		lawCase.setSourceFileName(file.getName());
 		//System.out.println(file.getName());
+		
 		root = null;
 		ele = null;
 		value = null;
@@ -114,10 +115,17 @@ public class XmlToLawCase {
 					lawCase.setPlaintiffAlleges(value.getValue());
 
 					ele = ajjbqk.element("BGBCD");
-					if (ele != null)
+					if (ele != null){
 						value = ele.attribute("value");
-					else
-						value.setValue("");
+					}
+					else{
+						ele = ajjbqk.element("BGRBC");
+						if(ele != null){
+							value = ele.attribute("value");
+						}else
+							value.setValue("");
+					}
+						
 					lawCase.setDefendantArgued(value.getValue());
 
 					ele = ajjbqk.element("CMSSD");
@@ -136,7 +144,7 @@ public class XmlToLawCase {
 				if (ele != null){
 					value = ele.attribute("value");
 					
-					System.out.println(file.getAbsolutePath());
+					//System.out.println(file.getAbsolutePath());
 					
 					List<LawReference> lawReferences = new ArrayList<LawReference>();
 					ParseLawReferences.generateLawReferences(ele, lawReferences);
@@ -159,6 +167,13 @@ public class XmlToLawCase {
 				else
 					value.setValue("");
 				lawCase.setEnd(value.getValue());
+				
+				ele = root.element("title");
+				if (ele != null)
+					value = ele.attribute("value");
+				else
+					value.setValue("");
+				lawCase.setTitle(value.getValue());
 				
 				return lawCase;
 			} catch (DocumentException e) {

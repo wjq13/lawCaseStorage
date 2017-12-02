@@ -5,8 +5,10 @@ import com.mongodb.client.*;
 
 public class MongodbHelper {
 	static final String DBName = "lawCase";
-	static final String ServerAddress = "localhost";
-	static final int PORT = 27017;
+//	static final String ServerAddress = "localhost";
+//	static final int PORT = 27017;
+	static final String ServerAddress = "192.168.68.220";
+	static final int PORT = 30000;
 
 	private static MongoClient mongoClient = null;
 	private static MongoDatabase mongoDataBase = null;

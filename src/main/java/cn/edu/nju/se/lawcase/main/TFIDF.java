@@ -7,6 +7,7 @@ import java.util.Map;
 import org.bson.Document;
 
 import cn.edu.nju.se.lawcase.database.service.LawCaseWordsService;
+import cn.edu.nju.se.lawcase.database.service.ParagraphService;
 import cn.edu.nju.se.lawcase.database.service.SingleWordService;
 import cn.edu.nju.se.lawcase.database.service.TfIdfService;
 import cn.edu.nju.se.lawcase.entities.LawCaseWordsTfIdf;
@@ -18,14 +19,13 @@ public class TFIDF {
 	
 	static Map<String, Integer> worddocCount = new HashMap<>();
 	public static void main(String args[]) {
-		int filenum = 11386;
+		int filenum = ParagraphService.countAll();
 		worddocCount = SingleWordService.findALLWordCount();
 		FindIterable<Document> lawcaseWords = LawCaseWordsService.findALL();
 		for (Document lawcaseWord : lawcaseWords) {
 			LawCaseWordsTfIdf tfIdf = generateLawCaseTfIdf(lawcaseWord, filenum);
 			TfIdfService.InsertOne(tfIdf);
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
