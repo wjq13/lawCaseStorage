@@ -1,5 +1,8 @@
 package cn.edu.nju.se.lawcase.database.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 import cn.edu.nju.se.lawcase.database.MongodbHelper;
@@ -34,5 +37,19 @@ public class LawCaseService {
 	 */
 	public static FindIterable<Document> findALL(){
 		return lawCaseCollection.find();
+	}
+
+	public static void writeFullTextMany(List<LawCase> lawCaseList) {
+		// TODO Auto-generated method stub
+		List<Document> lawcaseDocList = new ArrayList<Document>();
+		for(LawCase lawcase : lawCaseList){
+			Document document = new Document("text", lawcase.getFullText());
+			document.append("filepath", lawcase.getFilePath());
+			lawcaseDocList.add(document);
+		}
+		lawCaseCollection.insertMany(lawcaseDocList);
+		for(int caseindex = 0; caseindex < lawCaseList.size(); caseindex ++){
+			lawCaseList.get(caseindex).setFullTextId(lawcaseDocList.get(caseindex).get("_id").toString());
+		}
 	}
 }

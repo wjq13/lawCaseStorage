@@ -32,4 +32,25 @@ public class LawReferenceService {
 		
 		lawReferenceCollection.insertOne(document);
 	}
+
+	public static void writeMany(List<LawCase> lawCaseList) {
+		// TODO Auto-generated method stub
+		List<Document> lawreferenceDocList = new ArrayList<Document>();
+		for(LawCase lawcase : lawCaseList){
+			Document document = new Document(LawCase.FullTextId, lawcase.getFullTextId());
+			
+			List<Document> lawReferencesDoc = new ArrayList<Document>();
+			for(LawReference lawReference : lawcase.getLawReferences()){
+				Document lawReferenceDoc = new Document("name", lawReference.getLawName());
+				lawReferenceDoc.append("levelone", lawReference.getLevelOneTiao());
+				lawReferenceDoc.append("leveltwo", lawReference.getLevelTwoKuan());
+				
+				lawReferencesDoc.add(lawReferenceDoc);
+			}
+			
+			document.append("references", lawReferencesDoc);
+			lawreferenceDocList.add(document);
+		}
+		lawReferenceCollection.insertMany(lawreferenceDocList);
+	}
 }

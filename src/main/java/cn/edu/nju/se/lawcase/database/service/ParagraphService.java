@@ -35,7 +35,7 @@ public class ParagraphService {
 
 	}
 
-	public static void writeLawCases(List<LawCase> lawCaseList) {
+	public static void writeLawCaseMany(List<LawCase> lawCaseList) {
 		List<Document> docList = new ArrayList<>();
 		List<Document> segementDocList = new ArrayList<>();
 		List<Document> segementDocListNotNULL = new ArrayList<>();
