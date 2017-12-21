@@ -179,6 +179,8 @@ public class LawCase implements Serializable {
 			AnalysisProcess, CaseDecision };
 
 	public static String[] pNamesTF = new String[] { LitigationRecord, PlaintiffAlleges, DefendantArgued, FactFound };
+	
+	public static String[] pNamesJieBaTF = new String[] {  PlaintiffAlleges, DefendantArgued, FactFound };
 
 	public LawCase() {
 		this.lawcaseTF = null;

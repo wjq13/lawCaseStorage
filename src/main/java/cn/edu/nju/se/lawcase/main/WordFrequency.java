@@ -7,6 +7,7 @@ import org.bson.Document;
 
 import cn.edu.nju.se.lawcase.database.service.LawCaseWordsService;
 import cn.edu.nju.se.lawcase.database.service.ParagraphService;
+import cn.edu.nju.se.lawcase.database.service.Segment2Service;
 import cn.edu.nju.se.lawcase.database.service.SegmentService;
 import cn.edu.nju.se.lawcase.database.service.SingleWordService;
 import cn.edu.nju.se.lawcase.entities.LawCase;
@@ -24,6 +25,10 @@ public class WordFrequency {
 		FindIterable<Document> lawcaseParagraphs = ParagraphService.findALL();
 		for(Document lawcaseParagraph : lawcaseParagraphs){
 			LawCaseWords lawcaseWords = generateLawCaseTF(lawcaseParagraph);
+			//wx的分词没有分案件基本情况，有可能三段都为空，
+			if(lawcaseWords.getWordCountMap().size()<=1){
+				continue;
+			}
 			LawCaseWordsService.writeLawCaseWords(lawcaseWords);
 			
 			for(String word : lawcaseWords.getWordCountMap().keySet()){
@@ -61,10 +66,19 @@ public class WordFrequency {
 		String lawcaseId = lawcaseParagraph.get("_id").toString();
 		lawcaseWords.setLawcaseID(lawcaseId);
 		
-		for(String paragraphName : LawCase.pNamesTF){
+		
+//		//根据NLPIR分词记词频
+//		for(String paragraphName : LawCase.pNamesTF){
+//			if(!(lawcaseParagraph.get(paragraphName).toString().isEmpty())){
+//				String segID = ((Document)lawcaseParagraph.get(paragraphName)).get("segmentid").toString();
+//				allWords += SegmentService.getWordsStringByID(segID);
+//			}
+//		}
+		//jieba分词记词频
+		for(String paragraphName : LawCase.pNamesJieBaTF){
 			if(!(lawcaseParagraph.get(paragraphName).toString().isEmpty())){
 				String segID = ((Document)lawcaseParagraph.get(paragraphName)).get("segmentid").toString();
-				allWords += SegmentService.getWordsStringByID(segID);
+				allWords += Segment2Service.getWordsStringByID(segID);
 			}
 		}
 		lawcaseWords.setAllWords(allWords);

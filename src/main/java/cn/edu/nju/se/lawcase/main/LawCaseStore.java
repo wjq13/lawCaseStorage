@@ -25,42 +25,52 @@ public class LawCaseStore {
 		LawCase lawCase = null;
 		int processedFiles = 0;
 		List<LawCase> lawCaseList = new ArrayList<>();
-		for(File folder:folders){
-			File[] files = folder.listFiles();
-			lawCaseList = new ArrayList<>();
+		for(int i=445;i<folders.length;i++){
+			if(!folders[i].isDirectory()){
+				continue;
+			}
+//			if(folders[i].getName().compareTo("subfolder313")<0){
+//				continue;
+//			}
+			System.out.println(folders[i].getName());
+			File[] files = folders[i].listFiles();
 			for (File file : files) {
-				processedFiles++;
-				lawCase = XmlToLawCase.transOneXml(file);
-				lawCase.setFilePath(file.getAbsolutePath());
-				lawCase.setParagraphs();
+				if (file.getName().endsWith("xml")){
+					processedFiles++;
+					lawCase = XmlToLawCase.transOneXml(file);
+					lawCase.setFilePath(file.getAbsolutePath());
+					lawCase.setParagraphs();
 
-				//LawCaseService.writeFullText(lawCase);
-				//if (lawCase.getLawReferences().size() > 0) {
-				//	LawReferenceService.write(lawCase.getFullTextId(), lawCase.getLawReferences());
-				//}
-				
-				lawCaseList.add(lawCase);
-				
-				if (processedFiles % 2000 == 0) {
-					LawCaseService.writeFullTextMany(lawCaseList);
-					LawReferenceService.writeMany(lawCaseList);
-					ParagraphService.writeLawCaseMany(lawCaseList);
-					System.out.println(df.format(new Date())+"--"+processedFiles);
+					//LawCaseService.writeFullText(lawCase);
+					//if (lawCase.getLawReferences().size() > 0) {
+					//	LawReferenceService.write(lawCase.getFullTextId(), lawCase.getLawReferences());
+					//}
 					
-					lawCaseList = new ArrayList<LawCase>();
+					lawCaseList.add(lawCase);
+					
+					if (processedFiles % 2000 == 0) {
+						LawCaseService.writeFullTextMany(lawCaseList);
+						LawReferenceService.writeMany(lawCaseList);
+						ParagraphService.writeLawCaseMany(lawCaseList);
+						System.out.println(df.format(new Date())+"--"+processedFiles);
+						
+						lawCaseList = new ArrayList<LawCase>();
+					}
+					//if (processedFiles % 10000 == 0) {
+					//	ParagraphService.writeLawCases(lawCaseList);
+					//	lawCaseList = new ArrayList<>();
+					//	System.out.println(df.format(new Date())+"--10000--"+processedFiles);
+					//}
 				}
-				//if (processedFiles % 10000 == 0) {
-				//	ParagraphService.writeLawCases(lawCaseList);
-				//	lawCaseList = new ArrayList<>();
-				//	System.out.println(df.format(new Date())+"--10000--"+processedFiles);
-				//}
 			}
-			if(lawCaseList.size()>0){
-				LawCaseService.writeFullTextMany(lawCaseList);
-				LawReferenceService.writeMany(lawCaseList);
-				ParagraphService.writeLawCaseMany(lawCaseList);
-				System.out.println(df.format(new Date())+"--"+processedFiles);
-			}
+			//folder.renameTo(new File(folder.getAbsolutePath()+"_read"));
+		}
+
+		if(lawCaseList.size()>0){
+			LawCaseService.writeFullTextMany(lawCaseList);
+			LawReferenceService.writeMany(lawCaseList);
+			ParagraphService.writeLawCaseMany(lawCaseList);
+			System.out.println(df.format(new Date())+"--"+processedFiles);
 		}
 		
 	}

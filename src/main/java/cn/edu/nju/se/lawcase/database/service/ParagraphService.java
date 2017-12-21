@@ -37,8 +37,8 @@ public class ParagraphService {
 
 	public static void writeLawCaseMany(List<LawCase> lawCaseList) {
 		List<Document> docList = new ArrayList<>();
-		List<Document> segementDocList = new ArrayList<>();
-		List<Document> segementDocListNotNULL = new ArrayList<>();
+		List<Document> segmentDocList = new ArrayList<>();
+		List<Document> segmentDocListNotNULL = new ArrayList<>();
 		
 		for (LawCase lawCase : lawCaseList) {
 			for (int i = 0; i < lawCase.getParagraphSize(); i++) {
@@ -49,28 +49,28 @@ public class ParagraphService {
 					document.append("wordpostags", segmentations[1]);
 					document.append("keywords", segmentations[2]);
 					document.append("keywordpostags", segmentations[3]);
-					segementDocList.add(document);
-					segementDocListNotNULL.add(document);
+					segmentDocList.add(document);
+					segmentDocListNotNULL.add(document);
 				}else{
-					segementDocList.add(null);
+					segmentDocList.add(null);
 				}
 			}
 		}
 		
-		segementDocListNotNULL = SegmentService.insertMany(segementDocListNotNULL);
+		segmentDocListNotNULL = SegmentService.insertMany(segmentDocListNotNULL);
 		
-		int segementDocStartIndex = 0, segementDocStartIndexNotNULL = 0;
+		int segmentDocStartIndex = 0, segmentDocStartIndexNotNULL = 0;
 		for (LawCase lawCase : lawCaseList) {
-			List<Document> singleParaSegementDocList = new ArrayList<Document>();
+			List<Document> singleParaSegmentDocList = new ArrayList<Document>();
 			for(int segmentIndex = 0; segmentIndex < lawCase.getParagraphSize(); segmentIndex ++){
-				if(segementDocList.get(segementDocStartIndex + segmentIndex) != null){
-					singleParaSegementDocList.add(segementDocListNotNULL.get(segementDocStartIndexNotNULL));
-					segementDocStartIndexNotNULL ++;
+				if(segmentDocList.get(segmentDocStartIndex + segmentIndex) != null){
+					singleParaSegmentDocList.add(segmentDocListNotNULL.get(segmentDocStartIndexNotNULL));
+					segmentDocStartIndexNotNULL ++;
 				}else{
-					singleParaSegementDocList.add(null);
+					singleParaSegmentDocList.add(null);
 				}
 			}
-			segementDocStartIndex += lawCase.getParagraphSize();
+			segmentDocStartIndex += lawCase.getParagraphSize();
 			
 			Document document = new Document(LawCase.FullTextId, lawCase.getFullTextId());
 			document.append(LawCase.CauseOfAction, lawCase.getCauseOfAction());
@@ -88,11 +88,11 @@ public class ParagraphService {
 					document.append(LawCase.pNames[i], "");
 				} else {
 					Document paraTextDoc = new Document("text", paragraph);
-					paraTextDoc.append("segementid", singleParaSegementDocList.get(i).get("_id").toString());
+					paraTextDoc.append("segmentid", singleParaSegmentDocList.get(i).get("_id").toString());
 					document.append(LawCase.pNames[i], paraTextDoc);
 				}
 			}
-			singleParaSegementDocList = null;
+			singleParaSegmentDocList = null;
 			document.append("title", lawCase.getTitle());
 			
 			docList.add(document);
@@ -100,8 +100,8 @@ public class ParagraphService {
 		paragraphCollection.insertMany(docList);
 		
 		docList = null;
-		segementDocList = null;
-		segementDocListNotNULL = null;
+		segmentDocList = null;
+		segmentDocListNotNULL = null;
 	}
 	
 	public static Document parseLawCase(LawCase lawCase){
