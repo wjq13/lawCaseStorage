@@ -23,12 +23,19 @@ public class WordFrequency {
 	public static void main(String args[]){
 		
 		FindIterable<Document> lawcaseParagraphs = ParagraphService.findALL();
+		System.out.println("findall ok");
+		int count = 0,correctNum= 0;
 		for(Document lawcaseParagraph : lawcaseParagraphs){
 			LawCaseWords lawcaseWords = generateLawCaseTF(lawcaseParagraph);
 			//wx的分词没有分案件基本情况，有可能三段都为空，
-			if(lawcaseWords.getWordCountMap().size()<=1){
+			count++;
+			if(count%10000==0){
+				System.out.println("count:"+count+"----- findNum:"+correctNum);
+			}
+			if(lawcaseWords.getWordCountMap().size()<1){
 				continue;
 			}
+			correctNum++;
 			LawCaseWordsService.writeLawCaseWords(lawcaseWords);
 			
 			for(String word : lawcaseWords.getWordCountMap().keySet()){

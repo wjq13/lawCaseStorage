@@ -4,11 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.*;
 
 public class MongodbHelper {
-	static final String DBName = "lawCase";
+//	static final String DBName = "test";
 //	static final String ServerAddress = "localhost";
 //	static final int PORT = 27017;
+	static final String DBName = "lawCase";
 	static final String ServerAddress = "192.168.68.11";
-	static final int PORT = 30000;
+	static final int PORT = 20000;
 
 	private static MongoClient mongoClient = null;
 	private static MongoDatabase mongoDataBase = null;

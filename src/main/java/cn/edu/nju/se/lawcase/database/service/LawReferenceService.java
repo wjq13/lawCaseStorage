@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import cn.edu.nju.se.lawcase.database.MongodbHelper;
 import cn.edu.nju.se.lawcase.entities.LawCase;
 import cn.edu.nju.se.lawcase.entities.LawReference;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 public class LawReferenceService {
 
@@ -52,5 +55,15 @@ public class LawReferenceService {
 			lawreferenceDocList.add(document);
 		}
 		lawReferenceCollection.insertMany(lawreferenceDocList);
+	}
+
+	public static Document getById(ObjectId objectId) {
+		FindIterable<Document> docs=lawReferenceCollection.find(new Document("_id",objectId));
+		MongoCursor<Document> cursor= docs.iterator();
+		if(cursor.hasNext()){
+			return cursor.next();
+		}
+		return null;
+		
 	}
 }

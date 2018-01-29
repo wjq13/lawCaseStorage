@@ -54,6 +54,7 @@ public class SegmentService {
 		return document.get("_id").toString();
 	}
 
+	
 	public static String getWordsStringByID(String segID) {
 		return (String) segmentCollection.find(Filters.eq("_id", new ObjectId(segID))).first().get("words");
 	}

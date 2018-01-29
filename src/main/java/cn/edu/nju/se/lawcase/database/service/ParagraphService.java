@@ -1,7 +1,12 @@
 package cn.edu.nju.se.lawcase.database.service;
 
+import static com.mongodb.client.model.Aggregates.*;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Projections.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.Document;
 
@@ -9,8 +14,10 @@ import cn.edu.nju.se.lawcase.database.MongodbHelper;
 import cn.edu.nju.se.lawcase.entities.LawCase;
 import cn.edu.nju.se.lawcase.util.Segment;
 
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 public class ParagraphService {
 
@@ -39,7 +46,7 @@ public class ParagraphService {
 		List<Document> docList = new ArrayList<>();
 		List<Document> segmentDocList = new ArrayList<>();
 		List<Document> segmentDocListNotNULL = new ArrayList<>();
-		
+
 		for (LawCase lawCase : lawCaseList) {
 			for (int i = 0; i < lawCase.getParagraphSize(); i++) {
 				String paragraph = lawCase.getByPName(LawCase.pNames[i]);
@@ -51,27 +58,27 @@ public class ParagraphService {
 					document.append("keywordpostags", segmentations[3]);
 					segmentDocList.add(document);
 					segmentDocListNotNULL.add(document);
-				}else{
+				} else {
 					segmentDocList.add(null);
 				}
 			}
 		}
-		
+
 		segmentDocListNotNULL = SegmentService.insertMany(segmentDocListNotNULL);
-		
+
 		int segmentDocStartIndex = 0, segmentDocStartIndexNotNULL = 0;
 		for (LawCase lawCase : lawCaseList) {
 			List<Document> singleParaSegmentDocList = new ArrayList<Document>();
-			for(int segmentIndex = 0; segmentIndex < lawCase.getParagraphSize(); segmentIndex ++){
-				if(segmentDocList.get(segmentDocStartIndex + segmentIndex) != null){
+			for (int segmentIndex = 0; segmentIndex < lawCase.getParagraphSize(); segmentIndex++) {
+				if (segmentDocList.get(segmentDocStartIndex + segmentIndex) != null) {
 					singleParaSegmentDocList.add(segmentDocListNotNULL.get(segmentDocStartIndexNotNULL));
-					segmentDocStartIndexNotNULL ++;
-				}else{
+					segmentDocStartIndexNotNULL++;
+				} else {
 					singleParaSegmentDocList.add(null);
 				}
 			}
 			segmentDocStartIndex += lawCase.getParagraphSize();
-			
+
 			Document document = new Document(LawCase.FullTextId, lawCase.getFullTextId());
 			document.append(LawCase.CauseOfAction, lawCase.getCauseOfAction());
 			document.append(LawCase.CodeOfCA, lawCase.getCodeOfCauseOfAction());
@@ -81,7 +88,6 @@ public class ParagraphService {
 				document.append("codeofcatree", CodeOfCAService.readTreeOfCodeOfCA(lawCase.getCodeOfCauseOfAction()));
 			}
 
-			
 			for (int i = 0; i < lawCase.getParagraphSize(); i++) {
 				String paragraph = lawCase.getByPName(LawCase.pNames[i]);
 				if (paragraph.isEmpty()) {
@@ -94,17 +100,17 @@ public class ParagraphService {
 			}
 			singleParaSegmentDocList = null;
 			document.append("title", lawCase.getTitle());
-			
+
 			docList.add(document);
 		}
 		paragraphCollection.insertMany(docList);
-		
+
 		docList = null;
 		segmentDocList = null;
 		segmentDocListNotNULL = null;
 	}
-	
-	public static Document parseLawCase(LawCase lawCase){
+
+	public static Document parseLawCase(LawCase lawCase) {
 		Document document = new Document(LawCase.FullTextId, lawCase.getFullTextId());
 		document.append(LawCase.CauseOfAction, lawCase.getCauseOfAction());
 		document.append(LawCase.CodeOfCA, lawCase.getCodeOfCauseOfAction());
@@ -136,5 +142,38 @@ public class ParagraphService {
 		}
 		document.append("title", lawCase.getTitle());
 		return document;
+	}
+
+	public static int getCountOfCA(String code) {
+		long countAll = paragraphCollection.count(and(eq("codeOfCauseOfAction", code), ne("analysisProcess", ""),
+				ne("plaintiffAlleges", ""), ne("defendantArgued", ""), ne("factFound", "")));
+		return (int) countAll;
+	}
+
+	public static AggregateIterable<Document> getsDoc(String code, int num, int skip) {
+		AggregateIterable<Document> iterable = paragraphCollection
+				.aggregate(
+						Arrays.asList(
+								match(and(eq("codeOfCauseOfAction", code), ne("analysisProcess", ""),
+										ne("plaintiffAlleges", ""), ne("defendantArgued", ""), ne("factFound", ""))),
+								skip(skip), limit(num),
+								project(fields(
+										include("fullTextId", "plaintiffAlleges", "defendantArgued", "factFound",
+												"analysisProcess", "codeOfCauseOfAction", "causeOfAction"),
+										excludeId()))));
+		return iterable;
+	}
+
+	public static AggregateIterable<Document> getsDoc(String code) {
+		AggregateIterable<Document> iterable = paragraphCollection
+				.aggregate(
+						Arrays.asList(
+								match(and(eq("codeOfCauseOfAction", code), ne("analysisProcess", ""),
+										ne("plaintiffAlleges", ""), ne("defendantArgued", ""), ne("factFound", ""))),
+								project(fields(
+										include("fullTextId", "plaintiffAlleges", "defendantArgued", "factFound",
+												"analysisProcess", "codeOfCauseOfAction", "causeOfAction"),
+										excludeId()))));
+		return iterable;
 	}
 }

@@ -33,11 +33,14 @@ public class LawCaseWords {
 		Map<String, Integer> wordCountMapTmp = new HashMap<>();
 		for(int i = 0; i < allWordsArray.length; ++ i) {
 			String currentWord = allWordsArray[i];
-			if(wordCountMapTmp.containsKey(currentWord)){
-				wordCountMapTmp.put(currentWord, (int) wordCountMapTmp.get(currentWord) + 1);
-			}else{
-				wordCountMapTmp.put(currentWord, 1);
+			if(!currentWord.isEmpty()){
+				if(wordCountMapTmp.containsKey(currentWord)){
+					wordCountMapTmp.put(currentWord, (int) wordCountMapTmp.get(currentWord) + 1);
+				}else{
+					wordCountMapTmp.put(currentWord, 1);
+				}
 			}
+			
 		}
 		this.wordCountMap = wordCountMapTmp;
 	}
